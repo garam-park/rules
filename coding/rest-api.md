@@ -17,8 +17,8 @@
 | 페이지네이션 | 오프셋 방식 | `?page=2&per_page=20` |
 | 버저닝 | 헤더 `X-Api-Version` | `X-Api-Version: 1` |
 | 상태 코드 | 의미대로 (2xx/4xx/5xx) | 생성 201, 검증 오류 400 |
-| 성공 본문 | 단일은 그대로, 목록만 `data` 래핑 | |
-| 에러 본문 | `error.code` + `message` (+ `details`) | `ORDER_NOT_FOUND` |
+| 응답 본문 | `code`+`message`+`result` envelope | `{"code": 200000, ...}` |
+| 본문 코드 | 숫자, 앞 3자리 = HTTP 상태 | `404001` |
 | 날짜·시각 | ISO 8601, UTC | `2026-07-11T03:24:00Z` |
 
 ## URL
@@ -111,47 +111,52 @@
 | 409 | 상태 충돌 (중복 생성, 이미 취소된 주문 등) |
 | 500 | 서버 오류 |
 
-### 성공 본문
+### 본문 구조
 
-- **단일 리소스는 그대로, 목록만 래핑한다.** 성공/실패 정보는 이미 HTTP
-  상태 코드에 있으므로 본문에 중복하지 않는다.
-- 목록은 페이지네이션 메타가 필요하므로 `data` + 메타 필드로 감싼다.
+- **성공·실패 모두 `code` + `message` + `result` envelope로 통일한다.**
+  어떤 응답이든 클라이언트가 한 가지 모양으로 파싱한다.
 
 ```json
-// GET /users/1 — 단일: 리소스 그대로
-{ "id": 1, "name": "...", "created_at": "..." }
-
-// GET /users?page=2&per_page=20 — 목록: data + 메타
+// 성공 — GET /users/1
 {
-  "data": [ { "id": 1, ... }, ... ],
-  "page": 2,
-  "per_page": 20,
-  "total": 153
+  "code": 200000,
+  "message": "ok",
+  "result": { "id": 1, "name": "...", "created_at": "..." }
 }
-```
 
-### 에러 본문
-
-- 모든 에러는 같은 구조로 반환한다. `code`는 기계용, `message`는 개발자용,
-  `details`는 필드별 검증 오류 등이 있을 때만 포함(선택).
-
-```json
+// 성공(목록) — GET /users?page=2&per_page=20
 {
-  "error": {
-    "code": "ORDER_NOT_FOUND",
-    "message": "Order 42 does not exist.",
-    "details": [
-      { "field": "email", "code": "INVALID_FORMAT", "message": "..." }
-    ]
+  "code": 200000,
+  "message": "ok",
+  "result": {
+    "data": [ { "id": 1 }, { "id": 2 } ],
+    "page": 2,
+    "per_page": 20,
+    "total": 153
   }
 }
+
+// 실패 — GET /orders/42
+{
+  "code": 404001,
+  "message": "order 42 does not exist",
+  "result": null
+}
 ```
 
-- **에러 코드는 `UPPER_SNAKE_CASE` 열거값**이다 (naming.md의 enum 규칙과
-  동일). `대상_문제` 형태로 짓는다 — `ORDER_NOT_FOUND`,
-  `VALIDATION_FAILED`, `PAYMENT_ALREADY_APPROVED`.
-- `message`는 사용자 표시용이 아니다. 화면 문구는 클라이언트가 `code`를
-  보고 결정한다 (i18n 매핑 — enum 규칙과 같은 원리).
+- **`code`는 5~6자리 숫자이고, 앞 세 자리는 반드시 HTTP 상태 코드와
+  일치한다.** `404001` = HTTP 404 + 일련번호 001. 상태 코드와 본문 코드가
+  어긋나는 상황이 구조적으로 불가능해진다.
+  - 뒤 세 자리는 상태 코드 안에서의 세부 사유 일련번호. `000`은 세부
+    구분이 필요 없는 기본값 — 성공은 보통 `200000`, `201000`.
+  - 코드 목록은 API 문서에 코드표로 관리한다.
+- **`message`는 개발자용.** 문서를 찾지 않아도 원인을 파악할 수 있게
+  쓴다. 사용자 화면 문구가 아니다 — 표시 문구는 클라이언트가 `code`를
+  보고 결정한다 (i18n 매핑).
+- **`result`에 실제 데이터를 담는다.** 실패 시에는 `null`, 검증 오류처럼
+  세부 정보가 있으면 그 구조를 담을 수 있다
+  (`{"invalid_fields": [...]}` 등).
+- 204(본문 없음)는 envelope도 없이 빈 본문 그대로 둔다.
 
 ### 값 표기
 
