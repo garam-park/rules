@@ -9,10 +9,18 @@
 
 ```
 rules/
-├── README.md          # 저장소 소개
-├── git/               # 커밋 메시지, 브랜치 전략 등 Git 관련 규칙
-├── coding/            # 언어/프레임워크별 코딩 컨벤션
-└── workflow/          # 개발 프로세스, 리뷰, 배포 등 워크플로 규칙
+├── README.md                  # 저장소 소개
+├── git/
+│   ├── commit-message.md      # 커밋 메시지 (Conventional Commits, 한국어)
+│   └── branch.md              # 브랜치 전략 (Git Flow), 네이밍, 머지
+├── coding/
+│   ├── naming.md              # 작명 규칙 (변수·함수·DB·파일 등)
+│   ├── rest-api.md            # REST API (URL, 메서드, 응답 구조)
+│   ├── test.md                # 테스트 (구조, 이름, 비중, mock)
+│   └── error-logging.md       # 에러 처리·로깅
+└── workflow/
+    ├── pull-request.md        # PR·셀프 리뷰
+    └── release.md             # 버전(SemVer)·릴리스 절차
 ```
 
 ## 작성 원칙
