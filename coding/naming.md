@@ -109,6 +109,11 @@
 - `getUser(id)` — 없으면 예외 / `findUser(email)` — 없으면 null
 - `fetchExchangeRate()` — 외부 API 호출 / `listOrders(user_id)`
 
+컬렉션 조회에 `get` + 복수형(`getUsers`)을 쓰지 않는다. 컬렉션은 0건이
+정상 상황이라 `get`의 계약(없으면 에러)과 충돌하기 때문. `list`는
+"나열하다"라는 동사이며, 0건이면 에러 없이 빈 컬렉션을 반환한다.
+`getUser`/`getUsers`처럼 한 글자 차이로 갈리는 것도 피할 수 있다.
+
 ## 파일·환경
 
 - **파일·디렉터리**: `kebab-case`. macOS 등 대소문자 무구분 파일시스템에서
