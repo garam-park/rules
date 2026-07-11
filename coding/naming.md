@@ -18,7 +18,7 @@
 |---|---|---|
 | DB 테이블 | `snake_case` 복수형 (`users`) | 테이블은 행(row)의 집합이므로 복수형 |
 | DB 컬럼 | `snake_case` 단수형 (`created_at`) | |
-| API JSON 필드 | `camelCase` | 최종 소비자가 대부분 JS/TS 프론트엔드. DB `snake_case` ↔ JSON `camelCase` 변환은 직렬화 계층 한 곳에서만 수행한다 |
+| API JSON 필드 | `snake_case` | DB 컬럼과 표기가 일치해 변환 계층이 필요 없고, 백엔드↔프론트 간 필드명 추적이 쉽다 |
 | 파일/디렉터리 (웹 프로젝트) | `kebab-case` | 대소문자 구분 없는 파일시스템(macOS 등)에서 안전 |
 | 파일 (Python 모듈) | `snake_case` | import 가능해야 함 |
 | 환경변수 | `UPPER_SNAKE_CASE` | 관례 |
