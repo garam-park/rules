@@ -1,6 +1,6 @@
 # 작명 규칙 (Naming)
 
-> 상태: 확정 (2026-07-11) — Enum 값 표기만 보류(하단 참고).
+> 상태: 확정 (2026-07-11)
 > API URL 경로 규칙은 별도의 REST API 규칙 문서에서 다룬다.
 
 ## 요약표
@@ -16,6 +16,7 @@
 | 함수·메서드 | `camelCase` + 표준 동사 | `getUser()`, `sendEmail()` |
 | 클래스·인터페이스·타입 | `PascalCase` | `User`, `PaymentService` |
 | 상수 | `UPPER_SNAKE_CASE` | `MAX_RETRY_COUNT` |
+| Enum 멤버·저장값 | `UPPER_SNAKE_CASE` (동일 문자열) | `OrderStatus.PENDING = "PENDING"` |
 | Boolean | `is_` / `has_` / `can_` 접두사 | `is_active`, `hasPermission()` |
 | private/내부용 멤버 | `_` 접두사 (모든 언어) | `_cache`, `_buildQuery()` |
 | 약어 | 일반 단어처럼 취급 | `HttpServer`, `user_id`, `parseUrl()` |
@@ -125,9 +126,20 @@
 - **환경변수**: `UPPER_SNAKE_CASE`.
   - `DATABASE_URL`, `API_KEY`
 
-## 보류 항목
+## Enum
 
-- 🔲 **Enum 값(상태 문자열) 표기** — 추가 논의 필요.
-  현재 의견: 코드와 저장값 모두 UPPER (`OrderStatus.PENDING = "PENDING"`).
-  이름(naming)이 아니라 값(value)의 문제라는 관점. 단, DB·JSON 필드의
-  snake_case 규칙과 값 표기가 달라지는 트레이드오프가 있어 결정 전 재논의.
+- **Enum 멤버와 저장값 모두 `UPPER_SNAKE_CASE`로 통일한다.**
+  `OrderStatus.PENDING = "PENDING"`, DB·JSON에도 `"PENDING"`,
+  `"IN_PROGRESS"` 그대로 저장한다.
+  - 이름과 값이 같아 매핑 계층이 없다. `OrderStatus.valueOf(s)`,
+    `OrderStatus[s]`가 변환 없이 동작하고 이중 표기 버그가 원천 차단된다.
+  - JSON에서 `"status": "PENDING"`처럼 UPPER 표기만으로 자유 텍스트가
+    아닌 열거 토큰임이 드러난다 — "표기로 종류를 구분한다" 원칙의 확장.
+    필드명(snake_case)과 값(UPPER)의 표기가 다른 것은 서로 다른 종류이기
+    때문이며, 불일치가 아니다.
+  - 선례: protobuf/gRPC의 JSON 직렬화가 enum 값을 UPPER_SNAKE_CASE로 쓴다.
+  - 트레이드오프: 쿼리 스트링에 UPPER가 들어간다(`?status=IN_PROGRESS`).
+    변환 계층을 두지 않기 위해 쿼리 파라미터의 enum 값도 저장값 그대로
+    쓴다. (세부는 REST API 규칙 문서에서 다룬다)
+  - 화면 표시용 텍스트는 어차피 i18n/라벨 매핑을 거치므로
+    (`PENDING` → "대기 중") 저장값 표기와 무관하다.
