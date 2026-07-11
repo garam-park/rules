@@ -15,6 +15,7 @@ rules/
 │   └── branch.md              # 브랜치 전략 (Git Flow), 네이밍, 머지
 ├── coding/
 │   ├── naming.md              # 작명 규칙 (변수·함수·DB·파일 등)
+│   ├── project-structure.md   # 프로젝트 구조 (도메인형, 3계층, 의존 방향)
 │   ├── rest-api.md            # REST API (URL, 메서드, 응답 구조)
 │   ├── test.md                # 테스트 (구조, 이름, 비중, mock)
 │   └── error-logging.md       # 에러 처리·로깅
