@@ -9,10 +9,12 @@
 
 ```text
 rules/
+├── .dagger/                   # Dagger 파이프라인 (lint 함수)
 ├── .github/
 │   └── workflows/
-│       └── ci.yml             # Markdown lint CI
+│       └── ci.yml             # CI — Dagger 함수를 호출하는 얇은 래퍼
 ├── .markdownlint.jsonc        # Markdown lint 규칙
+├── dagger.json                # Dagger 모듈 설정
 ├── README.md                  # 저장소 소개
 ├── git/
 │   ├── commit-message.md      # 커밋 메시지 (Conventional Commits, 한국어)
@@ -36,5 +38,9 @@ rules/
 
 ## 자동 검증
 
-- `main`, `develop` 브랜치 push와 PR에서 Markdown lint CI를 실행한다.
+- 검증 로직은 Dagger 파이프라인(`.dagger/`)에 두고, 로컬과 CI가
+  **같은 컨테이너에서 같은 함수를 실행**한다. 로컬에서 통과하면
+  CI에서도 통과한다.
+- 로컬 실행: `dagger call lint` (Docker 필요)
+- CI: `main`, `develop` push와 PR에서 같은 함수를 호출한다.
 - Markdown lint 규칙은 `.markdownlint.jsonc`에 둔다.

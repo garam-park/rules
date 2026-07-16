@@ -19,8 +19,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
 
+      # 로컬의 `dagger call lint`와 같은 함수를 같은 컨테이너로 실행한다
       - name: Lint Markdown
-        uses: DavidAnson/markdownlint-cli2-action@8de2aa07cae85fd17c0b35642db70cf5495f1d25 # v24.0.0
+        uses: dagger/dagger-for-github@27b130bf0f79a7f6fbbbe0fbca6760dc9bb40a77 # v8.4.1
         with:
-          config: .markdownlint.jsonc
-          globs: "**/*.md"
+          version: "v0.21.7"
+          call: lint
