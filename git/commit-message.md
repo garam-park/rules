@@ -4,7 +4,7 @@
 
 ## 형식: Conventional Commits
 
-```
+```text
 타입(스코프): 제목
 
 본문 (선택)
@@ -48,7 +48,7 @@
 
 - 타입 뒤에 `!`를 붙이고, 본문에 `BREAKING CHANGE:`로 내용을 명시한다.
 
-```
+```text
 feat(api)!: 응답 envelope 구조 변경
 
 BREAKING CHANGE: 모든 응답이 code/message/result로 래핑된다.
@@ -57,7 +57,7 @@ BREAKING CHANGE: 모든 응답이 code/message/result로 래핑된다.
 
 ## 예시
 
-```
+```text
 feat: 주문 취소 기능 추가
 
 fix(auth): 만료 토큰 갱신 시 무한 루프 수정

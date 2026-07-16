@@ -90,7 +90,7 @@
 
 ## 응답
 
-참고: https://blog.storyg.co/rest-api-response-body-best-pratics
+참고: [REST API Response Body Best Practices](https://blog.storyg.co/rest-api-response-body-best-pratics)
 
 ### HTTP 상태 코드
 

@@ -29,6 +29,7 @@ test("재고가 없으면 주문이 실패한다", () => {
   커밋 메시지 한국어 결정과 일관.
   - TypeScript: `test("재고가 없으면 주문이 실패한다", ...)`
   - Python: 함수명은 영어 요약, docstring에 한국어 문장 병기
+
     ```python
     def test_order_fails_when_out_of_stock():
         """재고가 없으면 주문이 실패한다."""
