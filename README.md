@@ -7,8 +7,12 @@
 
 ## 구조
 
-```
+```text
 rules/
+├── .github/
+│   └── workflows/
+│       └── ci.yml             # Markdown lint CI
+├── .markdownlint.jsonc        # Markdown lint 규칙
 ├── README.md                  # 저장소 소개
 ├── git/
 │   ├── commit-message.md      # 커밋 메시지 (Conventional Commits, 한국어)
@@ -29,3 +33,8 @@ rules/
 - 규칙은 하나의 마크다운 문서로 작성한다.
 - 규칙마다 **왜 이 규칙이 필요한지(이유)** 를 함께 기록한다.
 - 지키기 어렵거나 불필요해진 규칙은 과감히 수정하거나 삭제한다.
+
+## 자동 검증
+
+- `main`, `develop` 브랜치 push와 PR에서 Markdown lint CI를 실행한다.
+- Markdown lint 규칙은 `.markdownlint.jsonc`에 둔다.

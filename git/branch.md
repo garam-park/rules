@@ -18,7 +18,7 @@
 - 설명은 `kebab-case` — 경로는 kebab 원칙(파일·URL 규칙)과 동일 계열.
 - 커밋 타입과 같은 어휘를 쓴다. 필요하면 `docs/`, `chore/`도 허용.
 
-```
+```text
 feature/order-cancel
 fix/token-expiry
 release/1.2.0
