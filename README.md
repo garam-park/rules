@@ -17,8 +17,9 @@ rules/
 ├── dagger.json                # Dagger 모듈 설정
 ├── README.md                  # 저장소 소개
 ├── git/
-│   ├── commit-message.md      # 커밋 메시지 (Conventional Commits, 한국어)
-│   └── branch.md              # 브랜치 전략 (Git Flow), 네이밍, 머지
+│   ├── branch.md              # 브랜치 전략, 네이밍, 동기화, 머지
+│   ├── commit.md              # 커밋 단위와 되돌리기
+│   └── commit-message.md      # 커밋 메시지 (Conventional Commits, 한국어)
 ├── coding/
 │   ├── naming.md              # 작명 규칙 (변수·함수·DB·파일 등)
 │   ├── project-structure.md   # 프로젝트 구조 (도메인형, 3계층, 의존 방향)

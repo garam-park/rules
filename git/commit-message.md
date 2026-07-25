@@ -1,6 +1,6 @@
 # 커밋 메시지 규칙
 
-> 상태: 확정 (2026-07-11)
+> 상태: 확정 (2026-07-26)
 
 ## 형식: Conventional Commits
 
@@ -30,6 +30,8 @@
 | `chore` | 빌드, 의존성, 설정 등 그 외 잡무 |
 
 - 스코프는 선택. 변경 영역을 좁혀줄 때만 쓴다 — `fix(auth): ...`
+- `git`, `coding`, `workflow`처럼 문서나 모듈의 영역을 나타내는 말은
+  타입이 아니라 스코프로 쓴다 — `docs(git): 브랜치 규칙 수정`
 
 ## 제목
 
@@ -54,6 +56,15 @@ feat(api)!: 응답 envelope 구조 변경
 BREAKING CHANGE: 모든 응답이 code/message/result로 래핑된다.
 기존 클라이언트는 result 언래핑이 필요하다.
 ```
+
+## merge commit 예외
+
+- GitHub가 PR 병합 시 생성하는 `Merge pull request #...` 커밋은 이 형식의
+  예외로 둔다.
+- PR 제목은 `workflow/pull-request.md`에 따라 Conventional Commits 형식을
+  지킨다.
+- merge commit까지 `feat:`나 `fix:`로 만들면 내부의 일반 커밋과 함께
+  체인지로그에 중복 반영될 수 있으므로 GitHub의 기본 메시지를 유지한다.
 
 ## 예시
 
