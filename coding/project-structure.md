@@ -8,7 +8,7 @@
 - **기능(도메인)별로 묶고, 그 안에 계층을 둔다.** 기능 하나를 고칠 때
   한 폴더만 보면 되고, 기능 삭제가 폴더 삭제로 끝난다.
 
-```
+```text
 src/
 ├── orders/
 │   ├── order-controller.ts
@@ -27,7 +27,7 @@ src/
 ## 계층: controller → service → repository
 
 | 계층 | 역할 |
-|---|---|
+| --- | --- |
 | controller | 진입 경계. 요청 파싱·검증, 응답 변환. 비즈니스 로직 없음 |
 | service | 비즈니스 로직. 트랜잭션 경계 |
 | repository | 저장소 접근. 쿼리만, 판단 없음 |
